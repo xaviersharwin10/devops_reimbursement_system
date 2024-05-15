@@ -7,19 +7,11 @@ stage('Backend npm install') {
                 sh script: """
         cd backend  # Navigate to the frontend directory
         npm install  # Install frontend dependencies
-        npm run server &
+        npm run server 
       """
             }
         }
-        stage('Frontend npm install') { 
-            steps {
-                sh script: """
-        cd frontend  # Navigate to the frontend directory
-        npm install  # Install frontend dependencies
-        npm start &
-      """
-            }
-        }
+
         
         // stage('Test') {
         //     steps {
