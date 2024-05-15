@@ -2,6 +2,15 @@
 pipeline {
     agent any
     stages {
+stage('Backend npm install') { 
+            steps {
+                sh script: """
+        cd backend  # Navigate to the frontend directory
+        npm install  # Install frontend dependencies
+        npm run server &
+      """
+            }
+        }
         stage('Frontend npm install') { 
             steps {
                 sh script: """
@@ -11,15 +20,7 @@ pipeline {
       """
             }
         }
-        stage('Backend npm install') { 
-            steps {
-                sh script: """
-        cd backend  # Navigate to the frontend directory
-        npm install  # Install frontend dependencies
-        npm run server
-      """
-            }
-        }
+        
         // stage('Test') {
         //     steps {
         //         bat '.\\jenkins\\scripts\\test.bat'
