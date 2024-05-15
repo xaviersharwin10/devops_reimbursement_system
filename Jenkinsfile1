@@ -7,7 +7,16 @@ pipeline {
                 sh script: """
         cd frontend  # Navigate to the frontend directory
         npm install  # Install frontend dependencies
-        npm start
+        npm start &
+      """
+            }
+        }
+        stage('Backend npm install') { 
+            steps {
+                sh script: """
+        cd backend  # Navigate to the frontend directory
+        npm install  # Install frontend dependencies
+        npm run server
       """
             }
         }
