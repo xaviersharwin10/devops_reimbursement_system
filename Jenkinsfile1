@@ -5,10 +5,21 @@ pipeline {
         stage('Checkout'){
             echo "Code checked out"
         }
-        stage('Sonarqube')
-        {
-            echo "yet to make the connection"
-        }
+        stage('SonarCloud') {
+          environment {
+            SCANNER_HOME = tool 'sonar_devops'
+            ORGANIZATION = "xavishacodes"
+            PROJECT_NAME = "xavishacodes_devops_reimbursement_system"
+          }
+          steps {
+            withSonarQubeEnv(installationName: 'sonar_devops', credentialsId: 'sonar_token') {
+                sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                -Dsonar.java.binaries=build/classes/java/ \
+                -Dsonar.projectKey=$PROJECT_NAME \
+                -Dsonar.sources=.'''
+            }
+          }
+}
         stage('Selenium testing')
         {
             echo "yet to do"
