@@ -79,19 +79,21 @@ pipeline
             {
                 script 
                 {
+                    kubernetesDeploy (configs: 'deploymentservice.yaml', kubeconfigId: 'kubernetes_token')
                     dir('frontend') 
                     {
+                        kubernetesDeploy (configs: 'deploymentservice.yaml', kubeconfigId: 'kubernetes_token')
                         // Apply Deployment
-                        sh "kubectl apply -f deployment.yaml --validate=false"
+                        //sh "kubectl apply -f deployment.yaml --validate=false"
 
                         // Apply Service (if needed)
-                        sh "kubectl apply -f service.yaml --validate=false"
+                        // sh "kubectl apply -f service.yaml --validate=false"
 
                         // Wait for the Deployment to be ready
-                        timeout(time: 5, unit: 'minutes') 
-                        {
-                            waitForDeployment("expense-management-frontend")
-                        }
+                        //timeout(time: 5, unit: 'minutes') 
+                        //{
+                            //waitForDeployment("expense-management-frontend")
+                        //}
                     }
                 }
             }
