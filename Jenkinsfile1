@@ -73,15 +73,25 @@ pipeline
                 }
             }
         }
-        stage('Deploying Frontend Container to Kubernetes') 
+        stage('Deploying Frontend Container to Minikube') 
         {
             steps 
             {
                 script 
                 {
-                    dir('frontend')
+                    dir('frontend') 
                     {
-                        kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+                        // Apply Deployment
+                        sh "kubectl apply -f deployment.yaml"
+
+                        // Apply Service (if needed)
+                        sh "kubectl apply -f service.yaml"
+
+                        // Wait for the Deployment to be ready
+                        timeout(time: 5, unit: 'minutes') 
+                        {
+                            waitForDeployment("expense-management-frontend")
+                        }
                     }
                 }
             }
@@ -94,4 +104,20 @@ pipeline
             }
         }
     }
+}
+
+def waitForDeployment(deploymentName) {
+    def count = 0
+    while (count < 12) { // Check every 30 seconds for up to 6 minutes
+        def deploymentStatus = sh(script: "kubectl get deployment ${deploymentName} -o jsonpath='{.status.readyReplicas}'", returnStdout: true).trim()
+        if (deploymentStatus == "1") {
+            echo "Deployment ${deploymentName} is ready"
+            return
+        } else {
+            count++
+            echo "Waiting for Deployment ${deploymentName} to be ready (${count * 30}s)"
+            sleep(30)
+        }
+    }
+    error "Deployment ${deploymentName} did not become ready within the timeout period"
 }
