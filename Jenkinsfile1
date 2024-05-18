@@ -82,10 +82,10 @@ pipeline
                     dir('frontend') 
                     {
                         // Apply Deployment
-                        sh "kubectl apply -f deployment.yaml"
+                        sh "kubectl apply -f deployment.yaml --validate=false"
 
                         // Apply Service (if needed)
-                        sh "kubectl apply -f service.yaml"
+                        sh "kubectl apply -f service.yaml --validate=false"
 
                         // Wait for the Deployment to be ready
                         timeout(time: 5, unit: 'minutes') 
