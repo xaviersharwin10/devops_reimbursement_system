@@ -14,7 +14,7 @@ pipeline {
             PROJECT_NAME = "xavishacodes_devops_reimbursement_system"
           }
           steps {
-            withSonarQubeEnv(installationName: 'sonar_devops', credentialsId: 'sonar_token') {
+            withSonarQubeEnv('sonar_devops') {
                 sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
                 -Dsonar.java.binaries=build/classes/java/ \
                 -Dsonar.projectKey=$PROJECT_NAME \
