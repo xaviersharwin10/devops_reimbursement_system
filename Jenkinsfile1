@@ -3,7 +3,9 @@ pipeline {
     agent any
     stages {
         stage('Checkout'){
+            steps{
             echo "Code checked out"
+            }        
         }
         stage('SonarCloud') {
           environment {
@@ -22,13 +24,18 @@ pipeline {
 }
         stage('Selenium testing')
         {
+            steps
+{
             echo "yet to do"
+}
         }
         stage('Docker build')
         {
+steps
+{
             echo "yet to do"
         }
-         
+         }
     }
     
 }
