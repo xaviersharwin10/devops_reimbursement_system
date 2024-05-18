@@ -79,7 +79,7 @@ pipeline
             {
                 script 
                 {
-                    kubernetesDeploy (configs: 'deploymentservice.yaml', kubeconfigId: 'kubernetes_token')
+                    
                     dir('frontend') 
                     {
                         kubernetesDeploy (configs: 'deploymentservice.yaml', kubeconfigId: 'kubernetes_token')
