@@ -1,41 +1,84 @@
 
-pipeline {
+pipeline 
+    {
+    environment 
+    {
+        dockerimagename = "sharwinrmsa/devops"
+        dockerImage = ""
+      }
     agent any
-    stages {
-        stage('Checkout'){
-            steps{
-            echo "Code checked out"
+    stages 
+    {
+        stage('Checkout')
+        {
+            steps
+            {
+                echo "Code checked out"
             }        
         }
-        stage('SonarCloud') {
-          environment {
-            SCANNER_HOME = tool 'sonar_devops'
-            ORGANIZATION = "xavishacodes"
-            PROJECT_NAME = "xavishacodes_devops_reimbursement_system"
-          }
-          steps {
-            withSonarQubeEnv('sonar_devops') {
-                sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
-                -Dsonar.java.binaries=build/classes/java/ \
-                -Dsonar.projectKey=$PROJECT_NAME \
-                -Dsonar.sources=.'''
+        stage('SonarCloud') 
+        {
+            environment 
+            {
+                SCANNER_HOME = tool 'sonar_devops'
+                ORGANIZATION = "xavishacodes"
+                PROJECT_NAME = "xavishacodes_devops_reimbursement_system"
             }
-          }
-}
+            steps 
+            {
+                withSonarQubeEnv('sonar_devops') 
+                {
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                    -Dsonar.java.binaries=build/classes/java/ \
+                    -Dsonar.projectKey=$PROJECT_NAME \
+                    -Dsonar.sources=.'''
+                }
+            }
+        }
         stage('Selenium testing')
         {
             steps
-{
-            echo "yet to do"
-}
+            {
+                echo "yet to do"
+            }
+        }
+        stage('Docker Image Build') 
+        { 
+            steps 
+            {
+                script 
+                {
+                    dir('frontend') 
+                    {
+                        // Build the Docker image
+                        dockerImage = docker.build dockerimagename
+                    }
+                }
+            }
+        }
+        stage('Pushing Image') 
+        {
+            environment 
+            {
+                registryCredential = 'docker_token'
+            }
+            steps
+            {
+                script 
+                {
+                    docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) 
+                    {
+                        dockerImage.push("18_may_frontend")
+                    }
+                }
+            }
         }
         stage('Docker build')
         {
-steps
-{
-            echo "yet to do"
+            steps
+            {
+                echo "yet to do"
+            }
         }
-         }
     }
-    
 }
