@@ -2,29 +2,21 @@
 pipeline {
     agent any
     stages {
-stage('Backend npm install') { 
-            steps {
-                sh script: """
-        cd backend  # Navigate to the frontend directory
-        npm install  # Install frontend dependencies
-        npm run server 
-      """
-            }
+        stage('Checkout'){
+            echo "Code checked out"
         }
-
-        
-        // stage('Test') {
-        //     steps {
-        //         bat '.\\jenkins\\scripts\\test.bat'
-        //     }
-        // }
-        // stage('Deliver') {
-        //     steps {
-        //         bat '.\\jenkins\\scripts\\deliver.bat'
-        //         input message: 'Finished using the web site? (Click "Proceed" to continue)'
-        //         bat '.\\jenkins\\scripts\\kill.bat'
-        //     }
-        // }
+        stage('Sonarqube')
+        {
+            echo "yet to make the connection"
+        }
+        stage('Selenium testing')
+        {
+            echo "yet to do"
+        }
+        stage('Docker build')
+        {
+            echo "yet to do"
+        }
          
     }
     
