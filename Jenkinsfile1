@@ -73,6 +73,19 @@ pipeline
                 }
             }
         }
+        stage('Deploying Frontend Container to Kubernetes') 
+        {
+            steps 
+            {
+                script 
+                {
+                    dir('frontend')
+                    {
+                        kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+                    }
+                }
+            }
+        }
         stage('Docker build')
         {
             steps
