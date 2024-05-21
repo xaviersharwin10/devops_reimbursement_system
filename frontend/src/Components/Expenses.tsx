@@ -227,8 +227,8 @@ function Expenses({
 	const groupExpensesByUserName = (expenses: any) => {
 		const groupedExpenses: any = {};
 
-		expenses.forEach((expense: any) => {
-			const userName = expense.userId.name;
+		expenses.length >0 && expenses.forEach((expense: any) => {
+			const userName = expense?.userId?.name;
 			if (!groupedExpenses[userName]) {
 				groupedExpenses[userName] = { expenses: [], totalExpense: 0 };
 			}
