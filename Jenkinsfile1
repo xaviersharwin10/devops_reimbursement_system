@@ -4,7 +4,8 @@ pipeline
     environment 
     {
         dockerimagename = "sharwinrmsa/devops"
-        dockerImage = ""
+        frontend_dockerImage = ""
+        backend_dockerImage = ""
       }
     agent any
     stages 
@@ -42,7 +43,7 @@ pipeline
                 echo "yet to do"
             }
         }
-        stage('Docker Image Build') 
+        stage('Frontend Docker Image Build') 
         { 
             steps 
             {
@@ -51,12 +52,26 @@ pipeline
                     dir('frontend') 
                     {
                         // Build the Docker image
-                        dockerImage = docker.build dockerimagename
+                        frontend_dockerImage = docker.build dockerimagename
                     }
                 }
             }
         }
-        stage('Pushing Image') 
+        stage('Backend Docker Image Build') 
+        { 
+            steps 
+            {
+                script 
+                {
+                    dir('backend') 
+                    {
+                        // Build the Docker image
+                        backend_dockerImage = docker.build dockerimagename
+                    }
+                }
+            }
+        }
+        stage('Pushing Image - Frontend') 
         {
             environment 
             {
@@ -68,7 +83,24 @@ pipeline
                 {
                     docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) 
                     {
-                        dockerImage.push("18_may_frontend")
+                        frontend_dockerImage.push("frontend_21_may")
+                    }
+                }
+            }
+        }
+        stage('Pushing Image - Backend') 
+        {
+            environment 
+            {
+                registryCredential = 'docker_token'
+            }
+            steps
+            {
+                script 
+                {
+                    docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) 
+                    {
+                        backend_dockerImage.push("backend_21_may")
                     }
                 }
             }
@@ -82,7 +114,7 @@ pipeline
                     
                     dir('frontend') 
                     {
-                        kubernetesDeploy (configs: 'deploymentservice.yaml', kubeconfigId: 'kubernetes_token')
+                        //kubernetesDeploy (configs: 'deploymentservice.yaml', kubeconfigId: 'kubernetes_token')
                         // Apply Deployment
                         //sh "kubectl apply -f deployment.yaml --validate=false"
 
