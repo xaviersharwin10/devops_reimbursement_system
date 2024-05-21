@@ -1,0 +1,90 @@
+pipeline {
+    environment {
+        dockerimagename = "sharwinrmsa/devops"
+        frontend_dockerImage = ""
+        backend_dockerImage = ""
+    }
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                echo "Code checked out"
+            }
+        }
+        stage('SonarCloud') {
+            environment {
+                SCANNER_HOME = tool 'sonar_devops'
+                ORGANIZATION = "xavishacodes"
+                PROJECT_NAME = "xavishacodes_devops_reimbursement_system"
+            }
+            steps {
+                withSonarQubeEnv('sonar_devops') {
+                    sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.organization=$ORGANIZATION \
+                    -Dsonar.java.binaries=build/classes/java/ \
+                    -Dsonar.projectKey=$PROJECT_NAME \
+                    -Dsonar.sources=.'''
+                }
+            }
+        }
+        stage('Selenium testing') {
+            steps {
+                echo "yet to do"
+            }
+        }
+        stage('Frontend Docker Image Build') {
+            steps {
+                script {
+                    dir('frontend') {
+                        // Build the Docker image
+                        frontend_dockerImage = docker.build("${dockerimagename}:frontend")
+                    }
+                }
+            }
+        }
+        stage('Backend Docker Image Build') {
+            steps {
+                script {
+                    dir('backend') {
+                        // Build the Docker image
+                        backend_dockerImage = docker.build("${dockerimagename}:backend")
+                    }
+                }
+            }
+        }
+        stage('Pushing Image - Frontend') {
+            environment {
+                registryCredential = 'docker_token'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+                        frontend_dockerImage.push("frontend_21_may")
+                    }
+                }
+            }
+        }
+        stage('Pushing Image - Backend') {
+            environment {
+                registryCredential = 'docker_token'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
+                        backend_dockerImage.push("backend_21_may")
+                    }
+                }
+            }
+        }
+        stage('Run Docker Images') {
+            steps {
+                script {
+                    // Run the frontend Docker image
+                    docker.image("${dockerimagename}:frontend").run('-d -p 3000:3000')
+
+                    // Run the backend Docker image
+                    docker.image("${dockerimagename}:backend").run('-d -p 8085:8085')
+                }
+            }
+        }
+    }
+}
