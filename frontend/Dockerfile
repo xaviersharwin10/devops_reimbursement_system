@@ -12,6 +12,8 @@ RUN npm install
 
 RUN npm install @fortawesome/fontawesome-svg-core
 
+RUN  npm install selenium-webdriver
+
 # Copy the rest of the frontend application code
 COPY . .
 
