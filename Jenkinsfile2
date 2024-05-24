@@ -108,9 +108,12 @@ pipeline {
         }
         stage('Success stage')
         {
-            script
+            steps
             {
-                echo "done"
+                script
+                {
+                    echo "done"
+                }
             }
         }
     }
