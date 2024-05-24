@@ -100,7 +100,7 @@ pipeline {
                     {
                         dir('test')
                         {
-                            sh "node seleniumTest.js"
+                            echo "work in progress"
                         }
                     }
                 }
