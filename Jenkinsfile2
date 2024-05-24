@@ -26,11 +26,6 @@ pipeline {
                 }
             }
         }
-        stage('Selenium testing') {
-            steps {
-                echo "yet to do"
-            }
-        }
         stage('Frontend Docker Image Build') {
             steps {
                 script {
@@ -84,6 +79,38 @@ pipeline {
                     // Run the backend Docker image
                     docker.image("${dockerimagename}:backend").run('-d -p 8085:8085')
                 }
+            }
+        }
+        stage('Wait for deployment')
+        {
+            steps
+            {
+                script
+                {
+                    sleep time: 30, unit: 'SECONDS'
+                }
+            }
+        }
+        stage('Selenium testing') {
+            steps 
+            {
+                script
+                {
+                    dir('frontend')
+                    {
+                        dir('test')
+                        {
+                            sh "node seleniumTest.js"
+                        }
+                    }
+                }
+            }
+        }
+        stage('Success stage')
+        {
+            script
+            {
+                echo "done"
             }
         }
     }
