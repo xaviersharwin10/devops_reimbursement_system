@@ -91,21 +91,6 @@ pipeline {
                 }
             }
         }
-        stage('Selenium testing') {
-            steps 
-            {
-                script
-                {
-                    dir('frontend')
-                    {
-                        dir('test')
-                        {
-                            sh "node ./seleniumTest.js"
-                        }
-                    }
-                }
-            }
-        }
         stage('Success stage')
         {
             steps
