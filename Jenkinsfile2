@@ -81,16 +81,6 @@ pipeline {
                 }
             }
         }
-        stage('Wait for deployment')
-        {
-            steps
-            {
-                script
-                {
-                    sleep time: 30, unit: 'SECONDS'
-                }
-            }
-        }
         stage('Success stage')
         {
             steps
