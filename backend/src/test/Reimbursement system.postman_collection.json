@@ -1,0 +1,135 @@
+{
+	"info": {
+		"_postman_id": "40a9c864-1f2f-4582-9b29-17db67c04d1e",
+		"name": "Reimbursement system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30011569"
+	},
+	"item": [
+		{
+			"name": "Post: Create a expense",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{requestURL}}/add-expense",
+					"host": [
+						"{{requestURL}}"
+					],
+					"path": [
+						"add-expense"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get: Should get the expenses of a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{requestURL}}/get-user-expenses",
+					"host": [
+						"{{requestURL}}"
+					],
+					"path": [
+						"get-user-expenses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get: Should get all expenses",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{requestURL}}/get-all-expenses",
+					"host": [
+						"{{requestURL}}"
+					],
+					"path": [
+						"get-all-expenses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete: Should delete an expense",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"It should display response as '204 No Content' on delete of a expense\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{requestURL}}/delete-record/{{id}}",
+					"host": [
+						"{{requestURL}}"
+					],
+					"path": [
+						"delete-record",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
