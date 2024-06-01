@@ -14,7 +14,7 @@ async function submitClaimTest() {
   try {
   // Step # | name | target | value
       // 1 | open | / |
-      await driver.get("http://localhost:3000/");
+      await driver.get("http://52.71.22.97:3000/");
       // 2 | setWindowSize | 1440x886 |
       await driver.manage().window().setRect({ width: 1440, height: 886 });
       // 3 | click | css=.button2 |
