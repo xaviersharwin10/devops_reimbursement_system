@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: expense-management-frontend #The name of the react.js application container
-        image: sharwinrmsa/devops:18_may_frontend #The Docker image for building the React.js application container
+        image: sharwinrmsa/devops:frontend_1_june #The Docker image for building the React.js application container
         ports:
         - containerPort: 3000 #The port for the React.js application container
