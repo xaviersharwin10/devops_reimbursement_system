@@ -81,6 +81,32 @@ pipeline {
                 }
             }
         }
+        stage('Wait for deployment')
+        {
+            steps
+            {
+                script
+                {
+                    sleep time: 20, unit: 'SECONDS'
+                }
+            }
+        }
+        stage('Selenium testing') 
+        {
+            steps 
+            {
+                script
+                {
+                    dir('frontend')
+                    {
+                        dir('test/Edge')
+                        {
+                            sh "node submitClaimTest.js"
+                        }
+                    }
+                }
+            }
+        }
         stage('Success stage')
         {
             steps
