@@ -8,7 +8,7 @@ async function approvalManagerTest() {
     driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
     await driver.manage().window().setRect({ width: 1440, height: 886 });
 
-    await driver.get("http://localhost:3000/");
+    await driver.get("http://52.71.22.97:3000/");
     await driver.manage().window().setRect({ width: 1440, height: 886 });
       // 3 | click | css=.button2 |
     await driver.findElement(By.css(".button2")).click();
