@@ -20,7 +20,7 @@ const edge = require('selenium-webdriver/chrome');
     await driver.manage().setTimeouts({ implicit: timeout });
 
     // Step 1: Open the website
-    await driver.get("http://localhost:3000/");
+    await driver.get("http://52.71.22.97:3000/");
 
     // Step 2: Set window size
     await driver.manage().window().setRect({ width: 1440, height: 886 });
