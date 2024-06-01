@@ -8,7 +8,7 @@ const edge = require('selenium-webdriver/edge');
       .setEdgeOptions(edgeOptions)
       .build();
     
-     await driver.get('http://54.90.41.245:3000/');
+     await driver.get('http://52.71.22.97:3000/');
     let loginBtn = await  driver.findElement(By.xpath('//*[@id="root"]/div/nav/div/button'));
     await loginBtn.click();
     let emailInput = await  driver.findElement(By.xpath('//*[@id="model-box"]/div/form/div[2]/input'));
