@@ -5,6 +5,9 @@ const path = require('path');  // Import the path module
 
 async function submitClaimTest() {
 
+  new edge.Options().headless(); // Enable headless mode
+  new edge.Options().addArguments('--disable-gpu');
+
   let driver = await new Builder()
     .forBrowser('MicrosoftEdge')
     .setChromeOptions(new edge.Options())
