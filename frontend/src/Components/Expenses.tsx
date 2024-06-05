@@ -4,6 +4,8 @@ import { format, subMonths } from "date-fns";
 import Expense from "./Expense";
 import CustomShapeBar from "./CustomShapeBar";
 import CustomPieChart from "./CustomPieChart";
+import { Table } from 'react-bootstrap';  // Import Table from react-bootstrap
+
 type DisplayValue = "login" | "register" | "expense-form" | "expense" | "";
 interface Props {
 	setDisplay: React.Dispatch<React.SetStateAction<DisplayValue>>;
@@ -13,12 +15,12 @@ interface Props {
 	setUserExpenses: React.Dispatch<React.SetStateAction<any>>;
 	isLoading: boolean;
 	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
-
 	expenses: any;
 	userType: "employee" | "manager";
 	setActiveExpense: React.Dispatch<React.SetStateAction<any>>;
 	active: string;
 }
+
 function Expenses({
 	setDisplay,
 	notify,
@@ -48,7 +50,6 @@ function Expenses({
 	];
 
 	useEffect(() => {
-		// Filter expenses based on filter criteria
 		let filtered = [...expenses];
 		if (filter.status.length > 0) {
 			filtered = filtered.filter((expense: any) =>
@@ -119,7 +120,6 @@ function Expenses({
 					transformedExpense[`receipts${index + 1}`] = url;
 				});
 			
-				// Return the transformed expense
 				return transformedExpense;
 			});
 			
@@ -144,15 +144,12 @@ function Expenses({
 
 		const currentDate = new Date();
 
-		// Iterate over the last 12 months
 		for (let i = 0; i < 12; i++) {
 			const currentDateOfMonth = subMonths(currentDate, i);
 			const monthLabel = format(currentDateOfMonth, "MM/yy");
 
-			// Initialize total amount for the month
 			totalExpensesByMonth[monthLabel] = 0;
 
-			// Sum up the expenses for the current month
 			expenses.forEach((expense: any) => {
 				const expenseDate = new Date(expense.date);
 				if (
@@ -177,14 +174,12 @@ function Expenses({
 	): { name: string; totalAmount: number }[] => {
 		const totalExpensesByCategory: { [key: string]: number } = {};
 
-		// Iterate over expenses and aggregate total amount for each category
 		expenses.forEach((expense: any) => {
 			const { category, amount } = expense;
 			totalExpensesByCategory[category] =
 				(totalExpensesByCategory[category] || 0) + amount;
 		});
 
-		// Convert the object into an array of objects
 		const result: { name: string; totalAmount: number }[] = [];
 		for (const category in totalExpensesByCategory) {
 			if (totalExpensesByCategory.hasOwnProperty(category)) {
@@ -203,14 +198,12 @@ function Expenses({
 	): { name: string; totalAmount: number }[] => {
 		const totalExpensesByStatus: { [key: string]: number } = {};
 
-		// Iterate over expenses and aggregate total amount for each category
 		expenses.forEach((expense: any) => {
 			const { status, amount } = expense;
 			totalExpensesByStatus[status] =
 				(totalExpensesByStatus[status] || 0) + amount;
 		});
 
-		// Convert the object into an array of objects
 		const result: { name: string; totalAmount: number }[] = [];
 		for (const category in totalExpensesByStatus) {
 			if (totalExpensesByStatus.hasOwnProperty(category)) {
@@ -227,7 +220,7 @@ function Expenses({
 	const groupExpensesByUserName = (expenses: any) => {
 		const groupedExpenses: any = {};
 
-		expenses.length >0 && expenses.forEach((expense: any) => {
+		expenses.length > 0 && expenses.forEach((expense: any) => {
 			const userName = expense?.userId?.name;
 			if (!groupedExpenses[userName]) {
 				groupedExpenses[userName] = { expenses: [], totalExpense: 0 };
@@ -255,8 +248,7 @@ function Expenses({
 		);
 	};
 
-	// Function to calculate average expenses
-	const getAverageExpense = ()=> {
+	const getAverageExpense = () => {
 		const totalExpenses = getTotalExpenses();
 		const numExpenses = expenses.length;
 		if (numExpenses === 0) return 0; 
@@ -267,7 +259,7 @@ function Expenses({
 		<div>
 			<div>
 				<p>Total expenses: {getTotalExpenses()}</p>
-				<p>Avarage expense: {getAverageExpense()}</p>
+				<p>Average expense: {getAverageExpense()}</p>
 			</div>
 			<div style={{ display: "flex", justifyContent: "space-between" }}>
 				<div>
@@ -276,21 +268,14 @@ function Expenses({
 						<div style={{ display: "flex", gap: "20px" }}>
 							<p style={{ margin: "0px" }}>
 								<h4 style={{ margin: "5px 0px" }}>Status:</h4>
-								<div
-									style={{ display: "flex", flexDirection: "column" }}
-								>
+								<div style={{ display: "flex", flexDirection: "column" }}>
 									{statuses.map((status: any) => (
 										<label key={status}>
 											<input
 												type="checkbox"
 												value={status.toLowerCase()}
 												checked={filter.status.includes(status)}
-												onChange={(e) =>
-													handleFilterChange(
-														"status",
-														e.target.value
-													)
-												}
+												onChange={(e) => handleFilterChange("status", e.target.value)}
 											/>
 											{status}
 										</label>
@@ -299,21 +284,14 @@ function Expenses({
 							</p>
 							<p style={{ margin: "0px" }}>
 								<h4 style={{ margin: "5px 0px" }}>Category:</h4>
-								<div
-									style={{ display: "flex", flexDirection: "column" }}
-								>
+								<div style={{ display: "flex", flexDirection: "column" }}>
 									{categories.map((category) => (
 										<label key={category}>
 											<input
 												type="checkbox"
 												value={category}
 												checked={filter.category.includes(category)}
-												onChange={(e) =>
-													handleFilterChange(
-														"category",
-														e.target.value
-													)
-												}
+												onChange={(e) => handleFilterChange("category", e.target.value)}
 											/>
 											{category}
 										</label>
@@ -322,16 +300,10 @@ function Expenses({
 							</p>
 						</div>
 					</div>
-
-					<div
-						style={{ display: "flex", gap: "20px", alignItems: "center" }}
-					>
+					<div style={{ display: "flex", gap: "20px", alignItems: "center" }}>
 						<h4 style={{ margin: "5px 0px" }}>Sort:</h4>
 						<p>
-							<select
-								value={sort}
-								onChange={(e) => setSort(e.target.value)}
-							>
+							<select value={sort} onChange={(e) => setSort(e.target.value)}>
 								<option value="">None</option>
 								<option value="date-desc">Newest expenses</option>
 								<option value="date-asc">Older expenses</option>
@@ -341,7 +313,6 @@ function Expenses({
 						</p>
 					</div>
 				</div>
-
 				<button type="button" className="button" onClick={downloadPosts}>
 					<span className="button__text">
 						Download <br /> in excel
@@ -369,13 +340,12 @@ function Expenses({
 				</button>
 			</div>
 			<div>
-				<table>
+				<Table striped bordered hover>
 					<thead>
 						<tr>
 							<th>#</th>
 							<th>
 								Name / <br />
-								
 								<span id="hide">Description</span>
 							</th>
 							<th id="hide">Amount</th>
@@ -403,7 +373,7 @@ function Expenses({
 							/>
 						))}
 					</tbody>
-				</table>
+				</Table>
 			</div>
 			<div>
 				<div>
@@ -412,13 +382,11 @@ function Expenses({
 							? "Monthly Expenses Overview"
 							: "Employee Monthly Expenses Summary"}
 					</h2>
-
 					<CustomShapeBar data={getTotalExpensesLast12Months(expenses)} />
 				</div>
-				<div style={{ display: "flex", justifyContent: "space-evenly",flexWrap:"wrap" }}>
+				<div style={{ display: "flex", justifyContent: "space-evenly", flexWrap: "wrap" }}>
 					<div>
 						<h2>Expenses Based on Categories</h2>
-
 						<CustomPieChart data={getTotalExpensesByCategory(expenses)} />
 					</div>
 					{active === "employee" ? (
@@ -426,7 +394,7 @@ function Expenses({
 							<h2>Expenses Based on Employee</h2>
 							<CustomPieChart data={groupExpensesByUserName(expenses)} />
 						</div>
-					):(
+					) : (
 						<div>
 							<h2>Expenses Based on Status</h2>
 							<CustomPieChart data={getTotalExpensesByStatus(expenses)} />
