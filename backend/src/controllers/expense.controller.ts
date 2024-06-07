@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import ExpenseModel, { IExpense } from "../models/expense.model";
 import NotificationModel from "../models/notification.model";
 
+// function to add expense
 export const addExpense = async (req: Request, res: Response) => {
 	try {
 		const { name, date, description, amount, category, receiptsUrls } =
@@ -37,6 +38,7 @@ export const addExpense = async (req: Request, res: Response) => {
 	}
 };
 
+//function to get user expenses
 export const getUserExpenses = async (req: Request, res: Response) => {
 	try {
 		let filter: any = {};
@@ -67,6 +69,7 @@ export const getUserExpenses = async (req: Request, res: Response) => {
 	}
 };
 
+// function to get all expenses
 export const getAllExpenses = async (req: Request, res: Response) => {
 	try {
 		let filter: any = {};
@@ -88,6 +91,7 @@ export const getAllExpenses = async (req: Request, res: Response) => {
 	}
 };
 
+// function to update expense
 export const updateExpense = async (req: Request, res: Response) => {
 	try {
 		const { id } = req.params;
