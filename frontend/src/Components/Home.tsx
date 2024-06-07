@@ -234,7 +234,7 @@ function Home() {
   const markAllAsRead = () => {
     confirmAlert({
       title: "Confirm to mark all notifications as read",
-      message: "Are you sure, you want to make all notifications as read",
+      message: "Are you sure, you want to make all notifications as read?",
       buttons: [
         {
           label: "Confirm",
@@ -276,7 +276,7 @@ function Home() {
   const markAsRead = (id: any) => {
     confirmAlert({
       title: "Confirm to mark this notifications as read",
-      message: "Are you sure, you want to make this notifications as read",
+      message: "Are you sure, you want to make this notifications as read?",
       buttons: [
         {
           label: "Confirm",
@@ -318,7 +318,7 @@ function Home() {
   const deleteNotification = (id: any) => {
     confirmAlert({
       title: "Confirm to delete notification",
-      message: "Are you sure, you want to delete this notification",
+      message: "Are you sure, you want to delete this notification?",
       buttons: [
         {
           label: "Confirm",
@@ -456,7 +456,7 @@ function Home() {
                             {!notification.isRead && (
                               <p
                                 style={{
-                                  backgroundColor: "#3D94E8",
+                                  backgroundColor: "#3C94E8",
                                   padding: "5px",
                                   borderRadius: "5px",
                                   cursor: "pointer",
