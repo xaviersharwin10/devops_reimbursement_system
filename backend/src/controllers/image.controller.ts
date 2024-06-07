@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 const cloudinary = require("cloudinary");
 
+// upload image to the cloud
 function uploadImageToCloudinary(file: any) {
 	return new Promise((resolve, reject) => {
 		cloudinary.v2.uploader.upload(
