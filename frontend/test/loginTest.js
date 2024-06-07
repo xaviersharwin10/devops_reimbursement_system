@@ -29,13 +29,13 @@ async function loginTest(browser) {
     await driver.findElement(By.css(".flex-row input")).click();
     await driver.findElement(By.css(".button-submit")).click();
     await driver.sleep(10000); // Wait for 10 second
-    // Add assertions or further steps as needed
+    // Add assertions or further steps as it is needed
 
     let nameButton = await driver.wait(until.elementLocated(By.xpath('/html/body/div/div/nav/div/div[2]/button[1]')), 100000);
     let notificationText = await nameButton.getText();
     console.log('Notification Text:', notificationText);
 
-    // Optionally, you can assert the text of the notification
+    // Optionally, you can assert the text of the notifications
     if (notificationText.includes('Anjana')) {
         console.log('Login is correct');
     } else {
