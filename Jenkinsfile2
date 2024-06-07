@@ -53,7 +53,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                        frontend_dockerImage.push("frontend_21_may")
+                        frontend_dockerImage.push("frontend_1_june")
                     }
                 }
             }
@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', registryCredential) {
-                        backend_dockerImage.push("backend_21_may")
+                        backend_dockerImage.push("backend_1_june")
                     }
                 }
             }
