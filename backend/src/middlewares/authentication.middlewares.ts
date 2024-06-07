@@ -7,7 +7,7 @@ dotenv.config();
 
 const jwtSecretKey: string = process.env.jwt_secret_key!;
 
-// Extend the Request type to include the user property
+// Extend the request type to include the 'user' property
 declare global {
 	namespace Express {
 		interface Request {
@@ -33,7 +33,7 @@ export const verifyToken = async (
 		const decoded = jwt.verify(token, jwtSecretKey) as JwtPayload;
 		const { userId } = decoded;
 
-		// Check if the user exists
+		// Function to check if the user exists
 		const user = await UserModel.findById(userId);
 		if (!user) {
 			return res
